@@ -105,6 +105,17 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  #reserve,
+  #programs,
+  #approach,
+  #tuition,
+  #team,
+  #story,
+  #faq {
+    scroll-margin-top: 5.5rem;
   }
   body {
     @apply bg-background text-foreground antialiased;

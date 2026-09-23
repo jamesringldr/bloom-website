@@ -1,10 +1,6 @@
 import Image from "next/image";
 import { tuition } from "@/lib/content";
 
-function formatUsd(n: number) {
-  return `$${n}`;
-}
-
 export function Tuition() {
   return (
     <section
@@ -29,53 +25,16 @@ export function Tuition() {
           </p>
         </div>
 
-        <div className="overflow-x-auto rounded-3xl bg-white shadow-md ring-1 ring-bloom-green/15">
-          <table className="min-w-full text-left text-sm sm:text-base">
-            <thead>
-              <tr className="border-b border-border bg-bloom-green/10">
-                <th className="px-4 py-4 font-display font-semibold text-bloom-ink sm:px-6">
-                  Program
-                </th>
-                <th className="px-3 py-4 font-display font-semibold text-bloom-ink">
-                  5-day
-                </th>
-                <th className="px-3 py-4 font-display font-semibold text-bloom-ink">
-                  4-day
-                </th>
-                <th className="px-3 py-4 font-display font-semibold text-bloom-ink">
-                  3-day
-                </th>
-                <th className="px-3 py-4 font-display font-semibold text-bloom-ink sm:pr-6">
-                  2-day
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tuition.rows.map((row) => (
-                <tr
-                  key={row.program}
-                  className="border-b border-border/70 last:border-0"
-                >
-                  <td className="px-4 py-4 font-semibold text-bloom-ink sm:px-6">
-                    {row.program}
-                  </td>
-                  <td className="px-3 py-4 text-bloom-ink/80">
-                    {formatUsd(row.rates.five)}
-                  </td>
-                  <td className="px-3 py-4 text-bloom-ink/80">
-                    {formatUsd(row.rates.four)}
-                  </td>
-                  <td className="px-3 py-4 text-bloom-ink/80">
-                    {formatUsd(row.rates.three)}
-                  </td>
-                  <td className="px-3 py-4 text-bloom-ink/80 sm:pr-6">
-                    {formatUsd(row.rates.two)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <figure className="mx-auto max-w-2xl">
+          <Image
+            src="/tuition-table.png"
+            alt="Bloom Early Learning Center weekly tuition: Infant $450/$400/$360/$280, Toddler $375/$320/$255/$200, Preschool $350/$300/$240/$180 for 5/4/3/2-day schedules"
+            width={769}
+            height={612}
+            className="h-auto w-full rounded-3xl bg-white shadow-md ring-1 ring-bloom-green/15"
+            priority={false}
+          />
+        </figure>
 
         <ul className="mx-auto mt-6 flex max-w-2xl flex-col gap-2 text-center text-bloom-ink/75 sm:flex-row sm:justify-center sm:gap-8">
           {tuition.fees.map((fee) => (
@@ -85,19 +44,6 @@ export function Tuition() {
           ))}
         </ul>
         <p className="mt-4 text-center text-sm text-bloom-ink/55">{tuition.note}</p>
-
-        <figure className="mx-auto mt-10 max-w-xl">
-          <Image
-            src="/tuition-table.png"
-            alt="Bloom Early Learning Center weekly tuition rates table"
-            width={769}
-            height={612}
-            className="h-auto w-full rounded-2xl shadow-sm ring-1 ring-border"
-          />
-          <figcaption className="mt-2 text-center text-xs text-bloom-ink/50">
-            Official rates graphic
-          </figcaption>
-        </figure>
       </div>
     </section>
   );

@@ -40,9 +40,9 @@ export function P2Story() {
             </p>
 
             <h4 className="mt-6 font-p2-hand text-2xl font-bold text-p2-cobalt">Special events</h4>
-            <ul className="mt-2 space-y-2">
-              {calendar2027.events.map((event) => (
-                <li key={event.name} className="flex items-center gap-3">
+            <ul className="p2-stagger mt-2 space-y-2">
+              {calendar2027.events.map((event, i) => (
+                <li key={event.name} className="flex items-center gap-3" style={{ "--i": i } as React.CSSProperties}>
                   <span className="w-40 shrink-0 whitespace-nowrap rounded-full bg-p2-sun px-3 py-1.5 text-center text-sm font-extrabold">
                     {event.date}
                   </span>
@@ -52,9 +52,9 @@ export function P2Story() {
             </ul>
 
             <h4 className="mt-6 font-p2-hand text-2xl font-bold text-p2-tomato">Closures</h4>
-            <ul className="mt-2 space-y-2">
-              {calendar2027.closures.map((event) => (
-                <li key={event.name} className="flex items-center gap-3">
+            <ul className="p2-stagger mt-2 space-y-2">
+              {calendar2027.closures.map((event, i) => (
+                <li key={event.name} className="flex items-center gap-3" style={{ "--i": i + 6 } as React.CSSProperties}>
                   <span className="w-40 shrink-0 whitespace-nowrap rounded-full bg-p2-blush px-3 py-1.5 text-center text-sm font-extrabold">
                     {event.date}
                   </span>

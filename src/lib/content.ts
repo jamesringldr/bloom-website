@@ -144,7 +144,7 @@ export const story = {
 
 export const calendar2027 = {
   events: [
-    { date: "February 1", name: "Grand Opening" },
+    { date: "January", name: "Grand Opening" },
     { date: "April 10–16", name: "Week of the Young Child" },
     { date: "May 3–7", name: "Teacher Appreciation" },
     { date: "May 7", name: "Muffins with Mom" },

@@ -80,14 +80,16 @@ export function P2Hero() {
           <Cloud className="p2-drift absolute left-[6%] top-10 w-28 text-white sm:w-40" />
           <Cloud className="p2-drift absolute right-[8%] top-20 w-24 text-p2-cream [--d:-6s] sm:w-32" />
           <Cloud className="p2-drift absolute left-[38%] top-4 hidden w-20 text-white/90 [--d:-11s] sm:block" />
-          <Image
-            src="/mascot-blossom-web.png"
-            alt="Blossom, the Bloom mascot, waving hello"
-            width={600}
-            height={577}
-            priority
-            className="p2-sway absolute bottom-0 left-1/2 h-[92%] w-auto -translate-x-1/2"
-          />
+          <div className="p2-rise absolute bottom-0 left-1/2 h-[92%] -translate-x-1/2 [--d:900ms]">
+            <Image
+              src="/mascot-blossom-web.png"
+              alt="Blossom, the Bloom mascot, waving hello"
+              width={600}
+              height={577}
+              priority
+              className="p2-sway h-full w-auto"
+            />
+          </div>
           <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-p2-ink">
             Placeholder art — real classroom photo coming
           </span>

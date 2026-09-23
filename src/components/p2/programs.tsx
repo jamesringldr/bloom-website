@@ -64,20 +64,25 @@ export function P2Programs() {
       className="relative bg-p2-cream-deep px-4 pb-24 pt-20 sm:px-6 sm:pb-28 sm:pt-28"
     >
       <div className="mx-auto max-w-6xl">
-        <Reveal className="max-w-2xl">
-          <p className="font-p2-hand text-2xl font-bold text-p2-grape sm:text-3xl">Programs</p>
-          <h2
-            id="p2-programs-heading"
-            className="mt-1 font-p2-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-extrabold leading-[1.08]"
-          >
-            Four classrooms, one{" "}
-            <span className="p2-squiggle [--sq:var(--color-p2-tomato)]">growing</span> community
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-p2-ink/80">
-            From first smiles to kindergarten readiness—each room meets children where they are.
-            Pick a classroom to see what a day looks like.
-          </p>
-        </Reveal>
+        <div className="flex items-center justify-between gap-8">
+          <Reveal className="max-w-2xl">
+            <p className="font-p2-hand text-2xl font-bold text-p2-grape sm:text-3xl">Programs</p>
+            <h2
+              id="p2-programs-heading"
+              className="mt-1 font-p2-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-extrabold leading-[1.08]"
+            >
+              Four classrooms, one{" "}
+              <span className="p2-squiggle [--sq:var(--color-p2-tomato)]">growing</span> community
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-p2-ink/80">
+              From first smiles to kindergarten readiness—each room meets children where they are.
+              Pick a classroom to see what a day looks like.
+            </p>
+          </Reveal>
+          <Reveal delay={120} className="hidden shrink-0 sm:block">
+            <Blossom pose="walk" className="p2-float h-44 md:h-56 lg:h-64" />
+          </Reveal>
+        </div>
 
         <Reveal className="mt-12" delay={80}>
           <div
@@ -114,6 +119,7 @@ export function P2Programs() {
                   <span
                     className={cn(
                       "p2-blob block shrink-0 bg-p2-cream p-1.5 transition-[width,height] duration-300 sm:p-2",
+                      selected && "p2-tab-art",
                       selected ? "size-12 sm:size-20 lg:size-24" : "size-11 sm:size-16 lg:size-16",
                     )}
                   >
@@ -163,8 +169,12 @@ export function P2Programs() {
                   <div className="p2-swap [--d:80ms]">
                     <h3 className="font-p2-hand text-3xl font-bold leading-none">Goals</h3>
                     <ul className="mt-4 flex flex-wrap gap-2">
-                      {program.goals.map((goal) => (
-                        <li key={goal} className="rounded-full bg-white px-3.5 py-2 text-[13px] font-bold text-p2-ink">
+                      {program.goals.map((goal, gi) => (
+                        <li
+                          key={goal}
+                          className="p2-swap rounded-full bg-white px-3.5 py-2 text-[13px] font-bold text-p2-ink"
+                          style={{ "--d": `${140 + gi * 45}ms` } as React.CSSProperties}
+                        >
                           {goal}
                         </li>
                       ))}

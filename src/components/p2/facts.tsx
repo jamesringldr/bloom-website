@@ -2,7 +2,7 @@ import { site } from "@/lib/content";
 import { Reveal } from "./reveal";
 
 const facts = [
-  { big: "4", small: "classrooms, infants through pre-K", tone: "bg-p2-tomato text-white", r: "-1.5deg" },
+  { big: "4 Programs", small: "Separate focused classrooms for each", tone: "bg-p2-tomato text-white", r: "-1.5deg" },
   { big: "6 wks–6 yrs", small: "ages we care for", tone: "bg-p2-orange text-p2-ink", r: "1deg" },
   { big: "Creative Curriculum", small: "+ Handwriting Without Tears", tone: "bg-p2-leaf text-p2-ink", r: "-1deg" },
   { big: "Jan 2027", small: `opening in ${site.location}`, tone: "bg-p2-cobalt text-white", r: "1.5deg" },

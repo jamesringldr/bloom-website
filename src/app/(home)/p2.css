@@ -67,6 +67,7 @@
   bottom: 0.02em;
   height: 0.26em;
   background: var(--sq, var(--color-p2-grape));
+  clip-path: inset(0);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8'%3E%3Cpath d='M0 4 Q6 0 12 4 T24 4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")
     repeat-x 0 50% / 0.9em 100%;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8'%3E%3Cpath d='M0 4 Q6 0 12 4 T24 4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")
@@ -89,6 +90,12 @@
   from {
     opacity: 0;
     transform: translateY(10px);
+  }
+}
+@keyframes p2-artin {
+  from {
+    opacity: 0.4;
+    transform: rotate(-10deg) scale(0.85);
   }
 }
 @keyframes p2-float {
@@ -129,6 +136,10 @@
 }
 .p2-swap {
   animation: p2-swap 0.35s var(--p2-ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.p2-tab-art {
+  animation: p2-artin 0.45s var(--p2-ease) both;
 }
 .p2-float {
   animation: p2-float 6s ease-in-out infinite;
@@ -157,6 +168,44 @@
   transform: translateY(28px);
 }
 
+/* squiggle underlines draw in once their heading has landed */
+[data-reveal="hidden"] .p2-squiggle::after {
+  clip-path: inset(0 100% 0 0);
+}
+[data-reveal="shown"] .p2-squiggle::after {
+  transition: clip-path 0.8s var(--p2-ease) 0.4s;
+}
+
+/* list rows cascade in after their card has revealed */
+[data-reveal="hidden"] .p2-stagger > * {
+  opacity: 0;
+}
+[data-reveal="shown"] .p2-stagger > * {
+  animation: p2-swap 0.45s var(--p2-ease) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 250ms);
+}
+
+/* flower borders sprout from the ground line */
+.p2-grow {
+  transform-origin: 50% 100%;
+}
+[data-grow] {
+  transition:
+    transform 0.9s var(--p2-ease),
+    opacity 0.5s ease-out;
+}
+[data-grow="hidden"] {
+  opacity: 0;
+  transform: scaleY(0.2) translateY(30%);
+}
+
+/* covered Approach cards recede as the next one slides over (set by CoverStack) */
+.p2-cover {
+  transform: scale(calc(1 - var(--cover, 0) * 0.06));
+  transform-origin: 50% 0;
+  filter: brightness(calc(1 - var(--cover, 0) * 0.16));
+}
+
 /* tilted panels straighten on hover */
 .p2-tilt {
   transform: rotate(var(--r, 0deg));
@@ -176,6 +225,9 @@
 }
 .p2 details[open]::details-content {
   block-size: auto;
+}
+.p2 details[open] > p {
+  animation: p2-swap 0.35s var(--p2-ease) both;
 }
 .p2 details summary::-webkit-details-marker {
   display: none;

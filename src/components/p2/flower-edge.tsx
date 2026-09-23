@@ -1,4 +1,8 @@
-/** A meadow of flowers growing up out of the top edge of a section. */
+"use client";
+
+import { useEffect, useRef } from "react";
+
+/** A meadow of flowers that sprouts up out of the top edge of a section. */
 export function FlowerEdge({
   id,
   color,
@@ -8,6 +12,28 @@ export function FlowerEdge({
   color: string;
   eye: string;
 }) {
+  const ref = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+
+    el.dataset.grow = "hidden";
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.dataset.grow = "shown";
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const flower = (scale: number) => (
     <g transform={`scale(${scale})`} fill={color}>
       {Array.from({ length: 6 }, (_, i) => (
@@ -19,8 +45,9 @@ export function FlowerEdge({
 
   return (
     <svg
+      ref={ref}
       aria-hidden
-      className="pointer-events-none absolute inset-x-0 h-[110px] w-full"
+      className="p2-grow pointer-events-none absolute inset-x-0 h-[110px] w-full"
       style={{ top: "calc(-110px + 2px)" }}
     >
       <defs>

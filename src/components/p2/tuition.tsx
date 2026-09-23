@@ -1,5 +1,4 @@
 import { tuition } from "@/lib/content";
-import { Blossom } from "./blossom";
 import { Reveal } from "./reveal";
 
 const cols = [
@@ -36,7 +35,6 @@ export function P2Tuition() {
             ))}
           </ul>
           <p className="mt-5 max-w-md text-sm font-semibold text-p2-ink/75">{tuition.note}</p>
-          <Blossom pose="party" className="p2-float mt-6 h-36 lg:h-44" />
         </Reveal>
 
         <Reveal delay={100}>

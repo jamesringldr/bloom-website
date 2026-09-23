@@ -2,6 +2,7 @@ import { approach } from "@/lib/content";
 import { Blossom } from "./blossom";
 import { Reveal } from "./reveal";
 import { Cloud } from "./art";
+import { CoverStack } from "./cover-stack";
 import { FlowerEdge } from "./flower-edge";
 
 const numTone = [
@@ -40,11 +41,11 @@ export function P2Approach() {
           <Blossom pose="pencil" className="p2-sway mt-8 h-44 lg:h-60" />
         </Reveal>
 
-        <ol className="space-y-4 lg:space-y-10">
+        <CoverStack className="space-y-4 lg:space-y-10">
           {approach.pillars.map((pillar, i) => (
             <li
               key={pillar.title}
-              className="lg:sticky"
+              className="p2-cover lg:sticky"
               style={{ top: `calc(8rem + ${i} * 1rem)` }}
             >
               <Reveal delay={i * 60}>
@@ -66,7 +67,7 @@ export function P2Approach() {
               </Reveal>
             </li>
           ))}
-        </ol>
+        </CoverStack>
       </div>
     </section>
   );

@@ -17,9 +17,9 @@ type ChildFields = {
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-function emptyChild(): ChildFields {
+function emptyChild(id = "child-1"): ChildFields {
   return {
-    id: crypto.randomUUID(),
+    id,
     fullName: "",
     dob: "",
     accommodations: "",
@@ -41,7 +41,10 @@ export function ReserveForm() {
   }
 
   function addChild() {
-    setChildren((prev) => [...prev, emptyChild()]);
+    setChildren((prev) => [
+      ...prev,
+      emptyChild(`child-${Date.now()}-${prev.length + 1}`),
+    ]);
   }
 
   function removeChild(id: string) {

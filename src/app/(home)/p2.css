@@ -1,0 +1,218 @@
+.p2 {
+  --p2-ease: cubic-bezier(0.2, 0, 0, 1);
+  font-family: var(--font-figtree), system-ui, sans-serif;
+  color: var(--color-p2-ink);
+  background: var(--color-p2-cream);
+  interpolate-size: allow-keywords;
+
+  /* Re-skin the shared shadcn/bloom tokens so the reused ReserveForm matches. */
+  --bloom-red: #d0300a;
+  --bloom-blue: #1a55ee;
+  --bloom-ink: #1f1b3d;
+  --bloom-green: #178048;
+  --bloom-soft: #fff4e0;
+  --bloom-sky: #ffe7bf;
+  --primary: #1a55ee;
+  --ring: #1a55ee;
+  --border: #ecd9b6;
+  --input: #8f8266;
+  --foreground: #1f1b3d;
+  --muted-foreground: #5b5675;
+}
+
+.p2 h1,
+.p2 h2,
+.p2 h3,
+.p2 h4,
+.p2 .font-display {
+  font-family: var(--font-baloo), var(--font-figtree), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* hero photo band: scalloped top edge with a sun-yellow outline */
+.p2-scallop {
+  --s: 64px;
+  height: calc(var(--s) / 2);
+  background:
+    radial-gradient(
+      circle at 50% 100%,
+      transparent calc(var(--s) / 2 - 5px),
+      var(--color-p2-sun) calc(var(--s) / 2 - 5px) calc(var(--s) / 2 - 1px),
+      transparent calc(var(--s) / 2 - 1px)
+    )
+    0 0 / var(--s) 100% repeat-x,
+    radial-gradient(
+      circle at 50% 100%,
+      transparent calc(var(--s) / 2 - 4px),
+      var(--color-p2-cream) calc(var(--s) / 2 - 3.5px)
+    )
+    0 0 / var(--s) 100% repeat-x;
+}
+@media (min-width: 768px) {
+  .p2-scallop {
+    --s: 96px;
+  }
+}
+
+/* wavy underline under a key word */
+.p2-squiggle {
+  position: relative;
+  white-space: nowrap;
+}
+.p2-squiggle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 0.26em;
+  background: var(--sq, var(--color-p2-grape));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8'%3E%3Cpath d='M0 4 Q6 0 12 4 T24 4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")
+    repeat-x 0 50% / 0.9em 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8'%3E%3Cpath d='M0 4 Q6 0 12 4 T24 4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")
+    repeat-x 0 50% / 0.9em 100%;
+}
+
+/* organic photo/avatar frame */
+.p2-blob {
+  border-radius: 58% 42% 55% 45% / 48% 58% 42% 52%;
+}
+
+/* ---- motion ---- */
+@keyframes p2-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+@keyframes p2-swap {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes p2-float {
+  50% {
+    transform: translateY(-10px) rotate(var(--rot, 0deg));
+  }
+}
+@keyframes p2-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes p2-drift {
+  from {
+    transform: translateX(-4vw);
+  }
+  to {
+    transform: translateX(4vw);
+  }
+}
+@keyframes p2-sway {
+  from {
+    transform: rotate(-2.5deg);
+  }
+  to {
+    transform: rotate(2.5deg);
+  }
+}
+
+.p2-rise {
+  animation: p2-rise 0.8s var(--p2-ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.p2-word {
+  display: inline-block;
+  animation: p2-rise 0.8s var(--p2-ease) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 150ms);
+}
+.p2-swap {
+  animation: p2-swap 0.35s var(--p2-ease) both;
+}
+.p2-float {
+  animation: p2-float 6s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+.p2-spin {
+  animation: p2-spin 48s linear infinite;
+}
+.p2-drift {
+  animation: p2-drift 22s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0ms);
+}
+.p2-sway {
+  transform-origin: 50% 100%;
+  animation: p2-sway 4.5s ease-in-out infinite alternate;
+}
+
+/* scroll reveal (attribute is set client-side, so no-JS never hides content) */
+[data-reveal] {
+  transition:
+    opacity 0.7s var(--p2-ease) var(--d, 0ms),
+    transform 0.7s var(--p2-ease) var(--d, 0ms);
+}
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* tilted panels straighten on hover */
+.p2-tilt {
+  transform: rotate(var(--r, 0deg));
+  transition: transform 0.2s var(--p2-ease);
+}
+.p2-tilt:hover {
+  transform: rotate(0deg);
+}
+
+/* FAQ accordion: animated open/close where ::details-content is supported */
+.p2 details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.25s var(--p2-ease),
+    content-visibility 0.25s allow-discrete;
+}
+.p2 details[open]::details-content {
+  block-size: auto;
+}
+.p2 details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* keyboard focus: ink ring + white halo stays visible on every section colour */
+.p2 :is(a, button, summary):focus-visible {
+  outline: 3px solid var(--color-p2-ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px #fff;
+}
+
+/* reused ReserveForm: align its heading and card with the rest of the page */
+.p2 #reserve .mb-8 > p:first-child {
+  font-family: var(--font-caveat), cursive;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.2;
+}
+.p2 #reserve-heading {
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+}
+.p2 #reserve form {
+  border: 3px solid var(--color-p2-cobalt);
+  border-radius: 2.5rem;
+  box-shadow: 8px 8px 0 var(--color-p2-sun);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p2 *,
+  .p2 *::before,
+  .p2 *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

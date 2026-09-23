@@ -1,6 +1,6 @@
 # Bloom Early Learning Center — Website
 
-Single-page marketing site for **Bloom Early Learning Center** (Lenexa, KS). Primary conversion: enrollment reservations for the February 2027 opening.
+Single-page marketing site for **Bloom Early Learning Center** (Lenexa, KS). Primary conversion: enrollment reservations for the January 2027 opening.
 
 Deploy target: **Vercel** · domain **bloomearlyed.com**
 

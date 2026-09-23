@@ -216,3 +216,26 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Redesign tokens (Maxima palette + Bloom logo rainbow) */
+@theme {
+  --color-p2-cream: #fff4e0;
+  --color-p2-cream-deep: #ffe7bf;
+  --color-p2-ink: #1f1b3d;
+  --color-p2-tomato: #d0300a;
+  --color-p2-sun: #ffc22e;
+  --color-p2-orange: #ffa31a;
+  --color-p2-cobalt: #1a55ee;
+  --color-p2-grape: #5b3fd6;
+  --color-p2-leaf: #2fbf71;
+  --color-p2-forest: #124b36;
+  --color-p2-pink: #ff8fae;
+  --color-p2-blush: #ffd3de;
+  --color-p2-mint: #7fe0b0;
+}
+
+@theme inline {
+  --font-p2-display: var(--font-baloo), var(--font-figtree), system-ui, sans-serif;
+  --font-p2-hand: var(--font-caveat), cursive;
+  --font-p2-body: var(--font-figtree), system-ui, sans-serif;
+}

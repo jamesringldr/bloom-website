@@ -59,7 +59,7 @@ export function Approach() {
             Google reviews coming soon
           </p>
           <p className="mt-1 text-sm text-bloom-ink/60">
-            We’re just getting started—check back after we open in February 2027.
+            We’re just getting started—check back after we open in January 2027.
           </p>
         </div>
       </div>

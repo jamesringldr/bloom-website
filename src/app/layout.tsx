@@ -16,7 +16,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} | Lenexa, KS Daycare Opening February 2027`,
+  title: `${site.name} | Lenexa, KS Daycare Opening January 2027`,
   description: site.metaDescription,
   metadataBase: new URL(`https://${site.domain}`),
   openGraph: {

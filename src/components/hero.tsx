@@ -50,7 +50,7 @@ export function Hero() {
           </h1>
           <p className="mx-auto max-w-xl text-lg text-bloom-ink/75 lg:mx-0">
             A warm, play-based early learning center for ages {site.ages}.
-            Reserve your child’s spot for our February 2027 opening.
+            Reserve your child’s spot for our January 2027 opening.
           </p>
           <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start">
             <Link

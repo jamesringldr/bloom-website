@@ -9,11 +9,11 @@ import { cn } from "@/lib/utils";
 
 const dots = ["bg-p2-tomato", "bg-p2-orange", "bg-p2-leaf", "bg-p2-cobalt", "bg-p2-grape"];
 const linkClass =
-  "rounded-full px-4 py-2 text-[15px] font-bold text-p2-ink transition-colors duration-200 hover:bg-p2-cream-deep";
+  "inline-flex h-11 items-center rounded-full px-4 text-[15px] font-bold text-p2-ink transition-colors duration-200 hover:bg-p2-cream-deep";
 
 function Logo() {
   return (
-    <Link href="#top" aria-label={site.name} className="shrink-0">
+    <Link href="#top" aria-label={site.name} className="flex h-11 shrink-0 items-center">
       <Image
         src="/logo-bloom-trim.png"
         alt="BLOOM"
@@ -55,6 +55,16 @@ export function P2Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // the mobile menu is lg:hidden — close it (and release the scroll lock) when a rotate/resize crosses that breakpoint
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => {
+      if (mq.matches) setOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   return (
     <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
       <div
@@ -95,7 +105,7 @@ export function P2Header() {
         <nav
           id="p2-mobile-nav"
           aria-label="Mobile"
-          className="mx-auto mt-2 max-w-5xl rounded-[2rem] bg-white p-4 shadow-xl lg:hidden"
+          className="mx-auto mt-2 max-h-[calc(100dvh-6.5rem)] max-w-5xl overflow-y-auto overscroll-contain rounded-[2rem] bg-white p-4 shadow-xl lg:hidden"
         >
           <ul className="flex flex-col gap-1">
             {links.map((item, i) => (

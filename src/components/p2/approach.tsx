@@ -38,7 +38,7 @@ export function P2Approach() {
             Play with <span className="p2-squiggle [--sq:var(--color-p2-sun)]">purpose.</span> Relationships first.
           </h2>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/95">{approach.lead}</p>
-          <Blossom pose="pencil" className="p2-sway mt-8 h-44 lg:h-60" />
+          <Blossom pose="pencil" className="p2-sway mt-8 h-44 lg:h-60 lg:[@media(max-height:959px)]:hidden" />
         </Reveal>
 
         <CoverStack className="space-y-4 lg:space-y-10">

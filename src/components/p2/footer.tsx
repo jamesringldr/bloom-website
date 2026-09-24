@@ -26,7 +26,7 @@ export function P2Footer() {
             <h2 className="font-display text-xl font-bold text-p2-sun">Say hello</h2>
             <ul className="mt-2 space-y-0.5 text-[15px] font-semibold">
               <li>
-                <a href={`mailto:${site.email}`} className="inline-block py-1.5 underline decoration-p2-sun decoration-2 underline-offset-4">
+                <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center underline decoration-p2-sun decoration-2 underline-offset-4">
                   {site.email}
                 </a>
               </li>
@@ -39,7 +39,7 @@ export function P2Footer() {
             <ul className="mt-2 space-y-0.5 text-[15px] font-semibold">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="inline-block py-1.5 transition-colors duration-200 hover:text-p2-sun">
+                  <Link href={item.href} className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-p2-sun">
                     {item.label}
                   </Link>
                 </li>

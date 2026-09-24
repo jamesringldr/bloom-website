@@ -254,6 +254,10 @@
   font-weight: 800;
   line-height: 1.08;
 }
+/* shadcn's default controls are 32–36px tall; keep the conversion form at 44px+ touch targets */
+.p2 #reserve :is(input, button) {
+  min-height: 2.75rem;
+}
 .p2 #reserve form {
   border: 3px solid var(--color-p2-cobalt);
   border-radius: 2.5rem;

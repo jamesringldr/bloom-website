@@ -15,7 +15,7 @@ export function P2Tuition() {
       aria-labelledby="p2-tuition-heading"
       className="relative bg-p2-sun px-4 pb-24 pt-20 sm:px-6 sm:pb-28 sm:pt-28"
     >
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-16">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-16">
         <Reveal>
           <p className="font-p2-hand text-2xl font-bold text-p2-tomato sm:text-3xl">Tuition</p>
           <h2

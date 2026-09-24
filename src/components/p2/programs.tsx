@@ -89,7 +89,7 @@ export function P2Programs() {
             role="tablist"
             aria-label="Classrooms"
             onKeyDown={onKeyDown}
-            className="flex items-end gap-1.5 sm:gap-3"
+            className="flex items-end gap-1 min-[360px]:gap-1.5 sm:gap-3"
           >
             {programs.map((program, i) => {
               const { bg, text, Art } = look[program.id];
@@ -108,11 +108,11 @@ export function P2Programs() {
                   tabIndex={selected ? 0 : -1}
                   onClick={() => setActive(i)}
                   className={cn(
-                    "flex min-w-0 flex-col items-center gap-1.5 px-1.5 text-center transition-[flex-grow,margin,padding,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)] sm:gap-2 sm:px-4 lg:flex-row lg:gap-4 lg:text-left",
+                    "flex min-w-0 flex-col items-center gap-1.5 px-1 text-center transition-[flex-grow,margin,padding,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)] min-[414px]:px-1.5 sm:gap-2 sm:px-4 lg:flex-row lg:gap-4 lg:text-left",
                     bg,
                     text,
                     selected
-                      ? "relative z-10 -mb-[2px] flex-[1.5] rounded-t-[1.5rem] pb-3 pt-3 sm:pb-5 sm:pt-5 lg:pt-6"
+                      ? "relative z-10 -mb-[2px] flex-1 rounded-t-[1.5rem] pb-3 pt-3 min-[414px]:flex-[1.5] sm:pb-5 sm:pt-5 lg:pt-6"
                       : "mb-2 flex-1 rounded-[1.25rem] py-3 hover:-translate-y-1 sm:mb-3 sm:rounded-[1.5rem] sm:py-4",
                   )}
                 >
@@ -129,7 +129,9 @@ export function P2Programs() {
                     <span
                       className={cn(
                         "block font-display font-extrabold leading-none",
-                        selected ? "text-[13px] sm:text-2xl lg:text-4xl" : "text-[12px] sm:text-xl lg:text-2xl",
+                        selected
+                          ? "text-[11px] min-[360px]:text-[12px] min-[414px]:text-[13px] sm:text-2xl lg:text-4xl"
+                          : "text-[11px] min-[360px]:text-[12px] sm:text-xl lg:text-2xl",
                       )}
                     >
                       {program.name}

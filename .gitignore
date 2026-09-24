@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw brand assets (print-size originals, ~90 MB) — web-sized copies live in /public
+/assets/bloom-assets/

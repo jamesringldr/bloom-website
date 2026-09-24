@@ -7,7 +7,7 @@ Deploy target: **Vercel** · domain **bloomearlyed.com**
 ## Stack
 
 - Next.js (App Router) + TypeScript + Tailwind CSS + shadcn/ui
-- Serverless route `POST /api/reserve` emails submissions to `hello@bloomearlyed.com` via [Resend](https://resend.com)
+- Serverless route `POST /api/reserve` validates submissions and forwards them as JSON to a Google Apps Script web app (Google Sheet)
 
 ## Run locally
 
@@ -19,16 +19,15 @@ npm run dev -- --port 43123
 
 Open [http://127.0.0.1:43123](http://127.0.0.1:43123).
 
-Without `RESEND_API_KEY`, form submissions succeed in **mock mode** and are logged to the server console (no email sent).
+Without `GOOGLE_SCRIPT_URL`, form submissions succeed in **mock mode** in development (logged to the server console, nothing saved). In production a missing URL returns an error instead, so a reservation is never silently dropped.
 
 ## Environment variables
 
 | Variable | Required | Description |
 |---|---|---|
-| `RESEND_API_KEY` | For real email | Resend API key |
-| `RESEND_FROM_EMAIL` | Optional | From address (default: `Bloom Reservations <onboarding@resend.dev>`). Use a verified domain sender in production, e.g. `Bloom <hello@bloomearlyed.com>`. |
+| `GOOGLE_SCRIPT_URL` | Yes (production) | The Apps Script web app `/exec` URL. Treat it like a secret — anyone with it can add rows to the sheet. |
 
-Resend dashboard: create an API key, verify `bloomearlyed.com`, set the vars in Vercel Project → Settings → Environment Variables.
+Set it in Vercel Project → Settings → Environment Variables (Production + Preview), then redeploy. The Apps Script deployment must be **Execute as: Me**, **Who has access: Anyone**, and it must handle the JSON body (`parentName`, `email`, `phone`, `startDate`, `daysNeeded`, `hoursNeeded`, `comments`, `children[]`). Any notification email to `hello@bloomearlyed.com` is sent from the script itself.
 
 ## Page sections
 

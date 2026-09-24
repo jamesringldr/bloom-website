@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
@@ -21,7 +20,6 @@ type ReservePayload = {
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const TO_EMAIL = "hello@bloomearlyed.com";
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
@@ -101,66 +99,20 @@ function validatePayload(body: unknown):
   };
 }
 
-function formatEmail(data: ReservePayload): { subject: string; text: string; html: string } {
-  const childBlocks = data.children
-    .map(
-      (child, i) =>
-        `Child ${i + 1}:\n  Name: ${child.fullName}\n  DOB: ${child.dob}\n  Accommodations: ${child.accommodations || "—"}`,
-    )
-    .join("\n\n");
-
-  const subject = `Enrollment reservation — ${data.parentName}`;
-  const text = [
-    "New Bloom enrollment reservation",
-    "",
-    `Parent/Guardian: ${data.parentName}`,
-    `Email: ${data.email}`,
-    `Phone: ${data.phone}`,
-    `Desired start date: ${data.startDate}`,
-    `Days needed: ${data.daysNeeded}`,
-    `Hours needed: ${data.hoursNeeded}`,
-    `Comments: ${data.comments || "—"}`,
-    "",
-    childBlocks,
-  ].join("\n");
-
-  const childrenHtml = data.children
-    .map(
-      (child, i) => `
-      <h3 style="margin:16px 0 8px;">Child ${i + 1}</h3>
-      <ul>
-        <li><strong>Name:</strong> ${escapeHtml(child.fullName)}</li>
-        <li><strong>DOB:</strong> ${escapeHtml(child.dob)}</li>
-        <li><strong>Accommodations:</strong> ${escapeHtml(child.accommodations || "—")}</li>
-      </ul>`,
-    )
-    .join("");
-
-  const html = `
-    <div style="font-family:system-ui,sans-serif;line-height:1.5;color:#1a2a3a;">
-      <h2>New Bloom enrollment reservation</h2>
-      <ul>
-        <li><strong>Parent/Guardian:</strong> ${escapeHtml(data.parentName)}</li>
-        <li><strong>Email:</strong> ${escapeHtml(data.email)}</li>
-        <li><strong>Phone:</strong> ${escapeHtml(data.phone)}</li>
-        <li><strong>Desired start date:</strong> ${escapeHtml(data.startDate)}</li>
-        <li><strong>Days needed:</strong> ${escapeHtml(data.daysNeeded)}</li>
-        <li><strong>Hours needed:</strong> ${escapeHtml(data.hoursNeeded)}</li>
-        <li><strong>Comments:</strong> ${escapeHtml(data.comments || "—")}</li>
-      </ul>
-      ${childrenHtml}
-    </div>
-  `;
-
-  return { subject, text, html };
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+// Apps Script answers 200 even when it fails (HTML error page, or a login page if the
+// deployment isn't "Anyone"), so a bare status check isn't enough.
+function isScriptSuccess(response: Response, body: string): boolean {
+  if (response.headers.get("content-type")?.includes("text/html")) return false;
+  try {
+    const parsed: unknown = JSON.parse(body);
+    if (parsed && typeof parsed === "object") {
+      const result = parsed as { ok?: unknown; error?: unknown };
+      if (result.ok === false || typeof result.error === "string") return false;
+    }
+  } catch {
+    // plain-text reply (e.g. "OK") — treat as success
+  }
+  return true;
 }
 
 export async function POST(request: NextRequest) {
@@ -176,51 +128,52 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false, error: validated.error }, { status: 400 });
   }
 
-  const { subject, text, html } = formatEmail(validated.data);
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromEmail =
-    process.env.RESEND_FROM_EMAIL ?? "Bloom Reservations <onboarding@resend.dev>";
+  const scriptUrl = process.env.GOOGLE_SCRIPT_URL;
 
-  if (!apiKey) {
-    console.info("[api/reserve] Mock mode — RESEND_API_KEY missing. Submission:", {
-      subject,
-      to: TO_EMAIL,
-      from: fromEmail,
-      text,
-    });
+  if (!scriptUrl) {
+    // Never fake a successful submission in production — the family would think they're on the list.
+    if (process.env.NODE_ENV === "production") {
+      console.error("[api/reserve] GOOGLE_SCRIPT_URL is not set — reservation was NOT saved.");
+      return NextResponse.json(
+        { ok: false, error: "Unable to save your reservation. Please try again." },
+        { status: 500 },
+      );
+    }
+    console.info("[api/reserve] Mock mode — GOOGLE_SCRIPT_URL missing. Submission:", validated.data);
     return NextResponse.json({
       ok: true,
       mocked: true,
-      message:
-        "Reservation accepted locally. Configure RESEND_API_KEY to email hello@bloomearlyed.com.",
+      message: "Reservation accepted locally. Set GOOGLE_SCRIPT_URL to save to the Google Sheet.",
     });
   }
 
   try {
-    const resend = new Resend(apiKey);
-    const result = await resend.emails.send({
-      from: fromEmail,
-      to: [TO_EMAIL],
-      replyTo: validated.data.email,
-      subject,
-      text,
-      html,
+    const response = await fetch(scriptUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(validated.data),
+      signal: AbortSignal.timeout(10_000),
     });
+    const body = await response.text();
 
-    if (result.error) {
-      console.error("[api/reserve] Resend error:", result.error);
+    if (!response.ok || !isScriptSuccess(response, body)) {
+      console.error("[api/reserve] Apps Script rejected the submission:", {
+        status: response.status,
+        contentType: response.headers.get("content-type"),
+        body: body.slice(0, 300),
+      });
       return NextResponse.json(
-        { ok: false, error: "Unable to send reservation email. Please try again." },
+        { ok: false, error: "Unable to save your reservation. Please try again." },
         { status: 502 },
       );
     }
 
-    return NextResponse.json({ ok: true, id: result.data?.id ?? null });
+    return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("[api/reserve] Unexpected error:", error);
     return NextResponse.json(
-      { ok: false, error: "Unable to send reservation email. Please try again." },
-      { status: 500 },
+      { ok: false, error: "Unable to save your reservation. Please try again." },
+      { status: 502 },
     );
   }
 }

@@ -29,7 +29,7 @@ export function P2Approach() {
       </div>
 
       <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-        <Reveal className="lg:sticky lg:top-32 lg:self-start">
+        <Reveal className="lg:top-32 lg:self-start lg:[@media(min-height:770px)]:sticky">
           <p className="font-p2-hand text-2xl font-bold text-p2-sun sm:text-3xl">Our Approach</p>
           <h2
             id="p2-approach-heading"
@@ -37,8 +37,12 @@ export function P2Approach() {
           >
             Play with <span className="p2-squiggle [--sq:var(--color-p2-sun)]">purpose.</span> Relationships first.
           </h2>
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/95">{approach.lead}</p>
-          <Blossom pose="pencil" className="p2-sway mt-8 h-44 lg:h-60 lg:[@media(max-height:959px)]:hidden" />
+          <div className="mt-6 max-w-lg space-y-4 text-lg leading-relaxed text-white/95">
+            {approach.lead.split("\n\n").map((paragraph) => (
+              <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+            ))}
+          </div>
+          <Blossom pose="pencil" className="p2-sway mt-8 h-44 lg:h-60 lg:[@media(max-height:1045px)]:hidden" />
         </Reveal>
 
         <CoverStack className="space-y-4 lg:space-y-10">

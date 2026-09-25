@@ -90,7 +90,7 @@ export const approach = {
     },
     {
       title: "Transitions by age + milestones",
-      body: "Classroom placement and transitions are a conversation, not just a calendar. Students move to the next room based on both age and developmental milestones. While most transitions happen at year’s end, we never let the calendar override what is best for a child.",
+      body: "Classroom placement and transitions are a conversation, not just a calendar. Students move to the next room based on both age and developmental milestones. We never let the calendar override what is best for a child.",
     },
     {
       title: "Family updates via Brightwheel",
@@ -103,14 +103,17 @@ export const tuition = {
   rows: [
     {
       program: "Infant",
+      ages: "6 weeks – 1 year",
       rates: { five: 450, four: 400, three: 360, two: 280 },
     },
     {
       program: "Toddler",
+      ages: "1 – 3 years",
       rates: { five: 375, four: 320, three: 255, two: 200 },
     },
     {
       program: "Preschool",
+      ages: "3 years+",
       rates: { five: 350, four: 300, three: 240, two: 180 },
     },
   ],
@@ -181,7 +184,7 @@ export const faq = [
   },
   {
     q: "How do classroom transitions work?",
-    a: "Classroom placement and transitions are a conversation, not just a calendar. Students will move to the next room based on both age and developmental milestones, and while most transitions happen at year’s end, we never let the calendar override what is best for a child. Our lead teachers, administration, and families make these decisions together.",
+    a: "Classroom placement and transitions are a conversation, not just a calendar. Students will move to the next room based on both age and developmental milestones. We never let the calendar override what is best for a child. Our lead teachers, administration, and families make these decisions together.",
   },
   {
     q: "How do you communicate with families?",

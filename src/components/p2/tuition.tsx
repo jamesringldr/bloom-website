@@ -59,8 +59,9 @@ export function P2Tuition() {
               <tbody>
                 {tuition.rows.map((row) => (
                   <tr key={row.program}>
-                    <th scope="row" className="py-3 text-left font-display text-lg font-extrabold sm:text-2xl">
-                      {row.program}
+                    <th scope="row" className="py-3 text-left">
+                      <span className="block font-display text-lg font-extrabold sm:text-2xl">{row.program}</span>
+                      <span className="block text-xs font-bold text-p2-ink/60 sm:text-sm">({row.ages})</span>
                     </th>
                     {cols.map((c) => (
                       <td key={c.key} className="rounded-2xl bg-white py-3 font-display text-xl font-extrabold sm:text-3xl">

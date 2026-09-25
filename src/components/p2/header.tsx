@@ -13,7 +13,7 @@ const linkClass =
 
 function Logo() {
   return (
-    <Link href="#top" aria-label={site.name} className="flex h-11 shrink-0 items-center">
+    <Link href="/#top" aria-label={site.name} className="flex h-11 shrink-0 items-center">
       <Image
         src="/logo-bloom-trim.png"
         alt="BLOOM"

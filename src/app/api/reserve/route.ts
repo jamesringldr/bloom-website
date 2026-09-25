@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { postToAppsScript } from "@/lib/apps-script";
 
 export const runtime = "nodejs";
 
@@ -99,22 +100,6 @@ function validatePayload(body: unknown):
   };
 }
 
-// Apps Script answers 200 even when it fails (HTML error page, or a login page if the
-// deployment isn't "Anyone"), so a bare status check isn't enough.
-function isScriptSuccess(response: Response, body: string): boolean {
-  if (response.headers.get("content-type")?.includes("text/html")) return false;
-  try {
-    const parsed: unknown = JSON.parse(body);
-    if (parsed && typeof parsed === "object") {
-      const result = parsed as { ok?: unknown; error?: unknown };
-      if (result.ok === false || typeof result.error === "string") return false;
-    }
-  } catch {
-    // plain-text reply (e.g. "OK") — treat as success
-  }
-  return true;
-}
-
 export async function POST(request: NextRequest) {
   let json: unknown;
   try {
@@ -147,33 +132,12 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  try {
-    const response = await fetch(scriptUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(validated.data),
-      signal: AbortSignal.timeout(10_000),
-    });
-    const body = await response.text();
-
-    if (!response.ok || !isScriptSuccess(response, body)) {
-      console.error("[api/reserve] Apps Script rejected the submission:", {
-        status: response.status,
-        contentType: response.headers.get("content-type"),
-        body: body.slice(0, 300),
-      });
-      return NextResponse.json(
-        { ok: false, error: "Unable to save your reservation. Please try again." },
-        { status: 502 },
-      );
-    }
-
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("[api/reserve] Unexpected error:", error);
+  if (!(await postToAppsScript(scriptUrl, validated.data))) {
     return NextResponse.json(
       { ok: false, error: "Unable to save your reservation. Please try again." },
       { status: 502 },
     );
   }
+
+  return NextResponse.json({ ok: true });
 }

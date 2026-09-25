@@ -125,11 +125,13 @@ export const team = [
   {
     name: "Jillian",
     role: "Owner / Director",
+    photo: "/team/jillian.webp",
     bio: "Jillian studied Early Education at KU. Her passion for early childhood education is knowing that she gets to make a difference in some of the most important years of a child’s life. She loves the hugs, laughter, silly conversations, endless questions, and even the challenging days—because every day brings an opportunity to teach, nurture, encourage, and make a child feel loved and valued!",
   },
   {
     name: "Megan",
     role: "Assistant Director",
+    photo: "/team/megan.webp",
     bio: "Megan studied Early Education at Johnson County Community College. Her passion for early childhood education comes from working with children and getting to experience the world through their eyes—watching them learn, explore, ask questions, and discover something for the very first time.",
   },
 ] as const;
@@ -189,9 +191,17 @@ export const faq = [
 ] as const;
 
 export const nav = [
-  { href: "#programs", label: "Programs", cta: false },
-  { href: "#approach", label: "Our Approach", cta: false },
-  { href: "#team", label: "Our Team", cta: false },
-  { href: "#tuition", label: "Tuition", cta: false },
-  { href: "#reserve", label: "Reserve Enrollment", cta: true },
+  { href: "/#programs", label: "Programs", cta: false },
+  { href: "/#approach", label: "Our Approach", cta: false },
+  { href: "/#team", label: "Our Team", cta: false },
+  { href: "/#tuition", label: "Tuition", cta: false },
+  { href: "/join-the-team", label: "Join The Team", cta: false },
+  { href: "/#reserve", label: "Reserve Enrollment", cta: true },
 ] as const;
+
+export const jobForm = {
+  positions: ["Full-time", "Part-Time", "Float", "Substitute"],
+  ageGroups: ["Infants", "Toddlers", "Early Preschool", "Pre-K"],
+  education: ["High School / GED", "College / Program"],
+  cpr: ["Yes", "No", "Other"],
+} as const;

@@ -7,7 +7,7 @@ Deploy target: **Vercel** · domain **bloomearlyed.com**
 ## Stack
 
 - Next.js (App Router) + TypeScript + Tailwind CSS + shadcn/ui
-- Serverless route `POST /api/reserve` validates submissions and forwards them as JSON to a Google Apps Script web app (Google Sheet)
+- Serverless routes `POST /api/reserve` (enrollment reservations) and `POST /api/join` (teacher applications from `/join-the-team`) validate submissions and forward them as JSON to Google Apps Script web apps (Google Sheets)
 
 ## Run locally
 
@@ -19,15 +19,16 @@ npm run dev -- --port 43123
 
 Open [http://127.0.0.1:43123](http://127.0.0.1:43123).
 
-Without `GOOGLE_SCRIPT_URL`, form submissions succeed in **mock mode** in development (logged to the server console, nothing saved). In production a missing URL returns an error instead, so a reservation is never silently dropped.
+Without its script URL, a form's submissions succeed in **mock mode** in development (logged to the server console, nothing saved). In production a missing URL returns an error instead, so a submission is never silently dropped.
 
 ## Environment variables
 
 | Variable | Required | Description |
 |---|---|---|
-| `GOOGLE_SCRIPT_URL` | Yes (production) | The Apps Script web app `/exec` URL. Treat it like a secret — anyone with it can add rows to the sheet. |
+| `GOOGLE_SCRIPT_URL` | Yes (production) | Apps Script web app `/exec` URL for **enrollment reservations**. Treat it like a secret — anyone with it can add rows to the sheet. |
+| `GOOGLE_SCRIPT_URL_JOIN` | Yes (production) | Separate Apps Script `/exec` URL for **teacher applications** (`/join-the-team`). Use its own script/sheet so applications don't mix with reservations. |
 
-Set it in Vercel Project → Settings → Environment Variables (Production + Preview), then redeploy. The Apps Script deployment must be **Execute as: Me**, **Who has access: Anyone**, and it must handle the JSON body (`parentName`, `email`, `phone`, `startDate`, `daysNeeded`, `hoursNeeded`, `comments`, `children[]`). Any notification email to `hello@bloomearlyed.com` is sent from the script itself.
+Set them in Vercel Project → Settings → Environment Variables (Production + Preview), then redeploy. Each Apps Script deployment must be **Execute as: Me** and **Who has access: Anyone**, and must handle the JSON body its form sends (see `src/app/api/reserve/route.ts` and `src/app/api/join/route.ts` for the exact fields; `children[]`, `positions[]` and `ageGroups[]` are arrays). Any notification email (e.g. to `hello@bloomearlyed.com`) is sent from the script itself.
 
 ## Page sections
 

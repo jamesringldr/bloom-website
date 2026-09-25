@@ -1,9 +1,10 @@
+import Image from "next/image";
 import { team } from "@/lib/content";
 import { Reveal } from "./reveal";
 
 const tone = [
-  { card: "bg-p2-blush", blob: "bg-p2-pink", r: "-1.2deg" },
-  { card: "bg-p2-mint", blob: "bg-p2-leaf", r: "1.2deg" },
+  { card: "bg-p2-blush", r: "-1.2deg" },
+  { card: "bg-p2-mint", r: "1.2deg" },
 ];
 
 export function P2Team() {
@@ -35,20 +36,14 @@ export function P2Team() {
                 style={{ "--r": tone[i].r } as React.CSSProperties}
               >
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
-                  <div
-                    role="img"
-                    aria-label={`${person.name} headshot placeholder`}
-                    className={`p2-blob grid size-36 shrink-0 place-items-center text-center ${tone[i].blob}`}
-                  >
-                    <div>
-                      <p className="font-display text-6xl font-extrabold leading-none text-p2-ink">
-                        {person.name.charAt(0)}
-                      </p>
-                      <p className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-p2-ink/80">
-                        Photo coming soon
-                      </p>
-                    </div>
-                  </div>
+                  <Image
+                    src={person.photo}
+                    alt={`${person.name}, ${person.role}`}
+                    width={720}
+                    height={720}
+                    sizes="144px"
+                    className="size-36 shrink-0"
+                  />
                   <div>
                     <h3 className="font-display text-4xl font-extrabold">{person.name}</h3>
                     <p className="mt-1 inline-block rounded-full bg-p2-ink px-4 py-1 text-sm font-extrabold text-p2-cream">

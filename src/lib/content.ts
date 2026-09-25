@@ -6,7 +6,7 @@ export const site = {
   hours: "7am–5pm Mon–Fri",
   ages: "6 weeks–6 years",
   opening: "January 2027",
-  domain: "bloomearlyed.com",
+  domain: "www.bloomearlyed.com",
   metaDescription:
     "Bloom Early Learning Center in Lenexa, KS — a warm, play-based daycare for ages 6 weeks–6 years. Opening January 2027. Reserve enrollment today.",
 };

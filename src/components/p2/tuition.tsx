@@ -34,8 +34,7 @@ export function P2Tuition() {
               </li>
             ))}
           </ul>
-          <p className="mt-5 max-w-md text-sm font-semibold text-p2-ink/75">{tuition.note}</p>
-        </Reveal>
+                  </Reveal>
 
         <Reveal delay={100}>
           <div className="p2-tilt overflow-x-auto rounded-[2.25rem] bg-p2-cream p-4 sm:p-6" style={{ "--r": "1deg" } as React.CSSProperties}>

@@ -171,8 +171,7 @@ export function ReserveForm() {
             </h2>
             <p className="mt-3 text-bloom-ink/75">
               Thanks for reserving enrollment at Bloom. We’ll follow up at your
-              email soon. No payment is due now—fees are invoiced later via a
-              link.
+              email soon.
             </p>
             <Button
               type="button"
@@ -210,11 +209,10 @@ export function ReserveForm() {
             id="reserve-heading"
             className="font-display text-3xl font-semibold text-bloom-ink sm:text-4xl"
           >
-            Save your family’s spot
+            Submit a Reservation Request
           </h2>
           <p className="mt-3 text-bloom-ink/70">
-            Opening {site.opening}. No payment in this form—we’ll invoice fees
-            later via a link.
+            Opening {site.opening}.
           </p>
         </div>
 

@@ -74,7 +74,7 @@ export const programs = [
 ] as const;
 
 export const approach = {
-  lead: "At Bloom Early Learning Center, we believe childhood should be where children grow through play, purpose, and growing curious minds, nurturing kind hearts, and building a love of learning. Our goal is to create more than a place for children to spend their day—we want to build a community where every family is known, loved, and encouraged to learn, play, grow, and flourish.",
+  lead: "At Bloom Early Learning Center, we believe childhood is a time to play, explore, discover, and grow. Through purposeful play and meaningful experiences, we strive to grow curious minds, nurture kind hearts, and build a lifelong love of learning.\n\nBloom is more than a place for children to spend their day. We’re creating a community where every child and family feels known, loved, and supported—a place where children are encouraged to learn, play, grow, and flourish.",
   pillars: [
     {
       title: "Purposeful play",
@@ -118,7 +118,6 @@ export const tuition = {
     "$150 per family yearly enrollment fee",
     "$100 per child yearly supply fee",
   ],
-  note: "No payment is collected on this form. Fees are invoiced later via a link.",
 };
 
 export const team = [

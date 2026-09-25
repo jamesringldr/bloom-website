@@ -207,7 +207,7 @@ export function P2Programs() {
               Found your classroom? Save your spot.
             </h3>
             <p className="max-w-md text-lg font-semibold">
-              Reservations are open for our January 2027 opening. No payment needed to reserve.
+              Reservations are open for our January 2027 opening.
             </p>
             <Link
               href="#reserve"

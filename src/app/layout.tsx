@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { site } from "@/lib/content";
 
+const ogImageAlt =
+  "BLOOM — Where little hearts grow, play, and bloom. Opening January 2027 in Lenexa, KS.";
+
 export const metadata: Metadata = {
   title: `${site.name} | Lenexa, KS Daycare Opening January 2027`,
   description: site.metaDescription,
@@ -15,10 +18,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/logo-bloom-web.png",
-        width: 800,
-        height: 400,
-        alt: "BLOOM wordmark",
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: ogImageAlt,
       },
     ],
   },
@@ -26,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: site.name,
     description: site.metaDescription,
-    images: ["/logo-bloom-web.png"],
+    images: [{ url: "/og-image.jpg", alt: ogImageAlt }],
   },
   robots: {
     index: true,

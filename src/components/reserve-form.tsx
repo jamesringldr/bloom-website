@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +33,16 @@ export function ReserveForm() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  // The confirmation card is far shorter than the form, so the page shrinks and the browser
+  // clamps the scroll position past it — bring the message back into view and announce it.
+  useEffect(() => {
+    if (status !== "success") return;
+    const heading = successHeadingRef.current;
+    heading?.scrollIntoView({ block: "center", behavior: "instant" });
+    heading?.focus({ preventScroll: true });
+  }, [status]);
 
   function updateChild(id: string, patch: Partial<ChildFields>) {
     setChildren((prev) =>
@@ -152,8 +162,10 @@ export function ReserveForm() {
               className="mx-auto mb-4 h-24 w-auto animate-float"
             />
             <h2
+              ref={successHeadingRef}
+              tabIndex={-1}
               id="reserve-heading"
-              className="font-display text-3xl font-semibold text-bloom-ink"
+              className="font-display text-3xl font-semibold text-bloom-ink outline-none"
             >
               You’re on the list!
             </h2>
